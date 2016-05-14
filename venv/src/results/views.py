@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -10,6 +10,7 @@ def team_create(request):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        return HttpResponseRedirect(instance.get_absolute_url())
 
 
     # if request.method == "POST":
@@ -32,10 +33,11 @@ def team_list(request):
 
 def team_update(request, id):
     instance = get_object_or_404(FootballTeam, id=id)
-    form = TeamForm(request.POST or None)
+    form = TeamForm(request.POST or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        return HttpResponseRedirect(instance.get_absolute_url())
     context = {"title": instance.name, "instance": instance, "form": form,}
     return render(request, "team_form.html", context)
 

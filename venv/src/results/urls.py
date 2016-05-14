@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'^$', team_list),
     url(r'^create$', team_create),
     url(r'^(?P<id>\d+)/$', team_detail, name='detail'),
-    url(r'^update$', team_update),
+    url(r'^(?P<id>\d+)/edit$', team_update, name="update"),
     url(r'^delete$', team_delete),
 ]
