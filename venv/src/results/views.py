@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from .forms import TeamForm
@@ -45,5 +45,8 @@ def team_update(request, id):
     context = {"title": instance.name, "instance": instance, "form": form,}
     return render(request, "team_form.html", context)
 
-def team_delete(request):
-    return HttpResponse("<h1>Delete</h1>")
+def team_delete(request, id):
+    instance = get_object_or_404(FootballTeam, id=id)
+    instance.delete()
+    messages.success(request, "Saved")
+    return redirect("teams:list")
