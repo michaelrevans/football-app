@@ -13,8 +13,6 @@ def team_create(request):
         instance.save()
         messages.success(request, "Successfully created")
         return HttpResponseRedirect(instance.get_absolute_url())
-    else:
-        messages.error(request, "Oops, something went wrong, nothing was created")
 
     # if request.method == "POST":
     #     print request.POST.get("name")
@@ -31,7 +29,7 @@ def team_detail(request, id):
 def team_list(request):
     queryset = FootballTeam.objects.all()
     context = {"object_list": queryset, "title": "List"}
-    return render(request, 'index.html', context)
+    return render(request, 'team_list.html', context)
     # return HttpResponse("<h1>List</h1>")
 
 def team_update(request, id):
