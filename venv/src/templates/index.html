@@ -8,7 +8,7 @@
     <h1>{{ title }} is working</h1>
     {% for team in object_list %}
 
-    <a href="detail">{{ team.name }}</a> <br>
+    <a href="{{ team.get_absolute_url }}">{{ team.name }}</a> <br>
     {{ team.points_home }} <br>
     {{ team.id }} <br>
 

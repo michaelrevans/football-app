@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 
@@ -63,3 +64,7 @@ class FootballTeam(models.Model):
     def get_losses(self):
         self.losses_total = self.losses_home + self.losses_away
         return self.losses_total
+
+    def get_absolute_url(self):
+        # return "/teams/%s/" %(self.id)
+        return reverse("teams:detail", kwargs={"id": self.id})

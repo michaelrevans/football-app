@@ -7,8 +7,8 @@ from .models import FootballTeam
 def team_create(request):
     return HttpResponse("<h1>Create</h1>")
 
-def team_detail(request, id=None):
-    instance = get_object_or_404(FootballTeam, id=3)
+def team_detail(request, id):
+    instance = get_object_or_404(FootballTeam, id=id)
     context = {"title": instance.name, "instance": instance,}
     return render(request, "team_detail.html", context)
     # return HttpResponse("<h1>Detail</h1>")
