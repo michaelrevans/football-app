@@ -2,10 +2,21 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from .forms import TeamForm
 from .models import FootballTeam
 
 def team_create(request):
-    return HttpResponse("<h1>Create</h1>")
+    form = TeamForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+
+
+    # if request.method == "POST":
+    #     print request.POST.get("name")
+    #     print request.POST.get("points_total")
+    context = {"form": form,}
+    return render(request, "team_form.html", context)
 
 def team_detail(request, id):
     instance = get_object_or_404(FootballTeam, id=id)
@@ -19,8 +30,14 @@ def team_list(request):
     return render(request, 'index.html', context)
     # return HttpResponse("<h1>List</h1>")
 
-def team_update(request):
-    return HttpResponse("<h1>Update</h1>")
+def team_update(request, id):
+    instance = get_object_or_404(FootballTeam, id=id)
+    form = TeamForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+    context = {"title": instance.name, "instance": instance, "form": form,}
+    return render(request, "team_form.html", context)
 
 def team_delete(request):
     return HttpResponse("<h1>Delete</h1>")
