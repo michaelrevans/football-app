@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
@@ -10,8 +11,10 @@ def team_create(request):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        messages.success(request, "Successfully created")
         return HttpResponseRedirect(instance.get_absolute_url())
-
+    else:
+        messages.error(request, "Oops, something went wrong, nothing was created")
 
     # if request.method == "POST":
     #     print request.POST.get("name")
@@ -37,6 +40,7 @@ def team_update(request, id):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        messages.success(request, "Saved")
         return HttpResponseRedirect(instance.get_absolute_url())
     context = {"title": instance.name, "instance": instance, "form": form,}
     return render(request, "team_form.html", context)
